@@ -2,6 +2,9 @@ package proyectopruebas;
 
 import Utilidades.PedirDatos;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -12,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Metodos {
     
-    public void crearUsuario(ArrayList<Usuario>lista){ //Metodo que recive el un ArrayList de tipo Usuario
+    public void crearUsuario(ArrayList<Usuario>lista) throws IOException{ //Metodo que recive el un ArrayList de tipo Usuario
         
         String nombre=PedirDatos.texto("Introduce tu nombre de Usuario"); //Variable de tipo String que se le introduce el nombre de usuario
         for(Usuario list:lista){ //Bucle For each que recorre el ArrayList de tipo Usuario.
@@ -24,7 +27,18 @@ public class Metodos {
         String rango=PedirDatos.texto("Introduce tu rango"); //Variable de tipo String que lleva el rango del usuario.
         int elo=PedirDatos.entero("Introduce tu elo actual"); //Variable de tipo Int que lleva el Elo del usuario.
         Usuario al= new Usuario(nombre,contraseña,rango,elo); //Creacion de un objeto usuario con los datos dados.
-        lista.add(al); //Añadido del objeto Usuario al ArrayList de usuarios.
+        lista.add(al); //Añadido del objeto Usuario user ArrayList de usuarios.
+        PrintWriter fich = null; //Para poder escribir en el fichero primero creamos una variable fich de tipo PrintWriter.
+                            for (Usuario user: lista) { //Bucle for each que recorre el ArrayList de Usuarios.
+                                if(nombre.equals(user.nombre)){ //If que en caso de encontrar el nombre de usuario nos guarde la partida.
+                                        fich = new PrintWriter(new FileWriter("Usuarios.txt")); //creacion del fichero empleando el nombre de usuario para el String nom.
+                                        JOptionPane.showMessageDialog(null,user); //JOptionPane que nos muestra nuestras estadisticas tras la partida.
+                                        fich.println(user); //Escritura en el fichero de los datos del usuario.
+                                        fich.close(); //Cierre del fichero.
+                                }
+                            }
+                        
+        
     }
     
     

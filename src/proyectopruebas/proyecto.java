@@ -2,6 +2,7 @@ package proyectopruebas;
 
 import Utilidades.PedirDatos;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -11,13 +12,14 @@ import javax.swing.JOptionPane;
  */
 public class proyecto {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ArrayList<Usuario> tusDatos = new ArrayList<>();
         ArrayList<Rivales> tusRivales = new ArrayList<>();
         ArrayList<Partida> tusPartidas = new ArrayList<>();
         Metodos obxm = new Metodos();
         Partida obx = new Partida();
         Rivales obxR = new Rivales();
+         File fich=new File("Usuarios.txt");
         int opciones; //variable de tipo int.
         
         do { //Bucle do while que realiza la funcion de menu del programa
