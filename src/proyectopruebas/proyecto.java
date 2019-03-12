@@ -26,7 +26,7 @@ public class proyecto {
             opciones = Integer.parseInt(JOptionPane.showInputDialog(null, "*****Introduzca el numero que corresponda con su eleccion*****\n\n1ºAñadir usuario\n2ºVer usuarios\n3ºBorrar un Usuario por su nombre\n4ºCrear rivales\n5ºCalcular elo partida\n6ºVer Ultima Partida Guardada de un jugador\n7ºSalir")); //Asignacion de la variable opciones, a la vez hace la funcion de texto del menu.
             switch (opciones) { //Switch case que realiza las funcion de menu
                 case 1:
-                    obxm.crearUsuario(tusDatos);
+                    obxm.crearUsuario();
                     break;
                 case 2:
                     obxm.verUsers(tusDatos);

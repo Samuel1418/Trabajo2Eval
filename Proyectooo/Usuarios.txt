@@ -1,0 +1,4 @@
+Jugador
+nombre=ji
+rango=oro
+elo=280

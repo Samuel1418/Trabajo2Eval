@@ -2,8 +2,13 @@ package proyectopruebas;
 
 import Utilidades.PedirDatos;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -15,31 +20,36 @@ import javax.swing.JOptionPane;
  */
 public class Metodos {
     
-    public void crearUsuario(ArrayList<Usuario>lista) throws IOException{ //Metodo que recive el un ArrayList de tipo Usuario
+    public void crearUsuario() throws IOException{ //Metodo que recive el un ArrayList de tipo Usuario
+        ObjectOutputStream fich = null;
+        FileOutputStream f = null;
         
         String nombre=PedirDatos.texto("Introduce tu nombre de Usuario"); //Variable de tipo String que se le introduce el nombre de usuario
-        for(Usuario list:lista){ //Bucle For each que recorre el ArrayList de tipo Usuario.
-            while(list.nombre.equals(nombre)){ //Bucle while que impide nombres repetidos para evitar duplicados de usuarios.
-                nombre=PedirDatos.texto("Ya existe un usuario con ese nombre");
-            }
+//        for(Usuario list:lista){ //Bucle For each que recorre el ArrayList de tipo Usuario.
+//            while(list.nombre.equals(nombre)){ //Bucle while que impide nombres repetidos para evitar duplicados de usuarios.
+//                nombre=PedirDatos.texto("Ya existe un usuario con ese nombre");
+//            }
+//        }
+        try{
+    f= new FileOutputStream(nombre+".dat");
+    fich= new ObjectOutputStream(f);
+   Usuario al= new Usuario(nombre,PedirDatos.texto("contraseña"),PedirDatos.texto("rango"),PedirDatos.entero("elo"));
+   fich.writeObject(al);
+            } catch (FileNotFoundException ex) {
+                System.out.println("erro 1"+ex.getMessage());
+    }catch(IOException ex){
+System.out.println("erro 2"+ex.getMessage());
+}finally{
+            try {
+                fich.close();
+                f.close();
+            } catch (IOException ex) {
+                System.out.println("erro 3"+ex.getMessage());
+            }  
         }
-        String contraseña=PedirDatos.texto("Introduce contraseña"); //Variable de tipo String que lleva la contraseña del usuario.
-        String rango=PedirDatos.texto("Introduce tu rango"); //Variable de tipo String que lleva el rango del usuario.
-        int elo=PedirDatos.entero("Introduce tu elo actual"); //Variable de tipo Int que lleva el Elo del usuario.
-        Usuario al= new Usuario(nombre,contraseña,rango,elo); //Creacion de un objeto usuario con los datos dados.
-        lista.add(al); //Añadido del objeto Usuario user ArrayList de usuarios.
-        PrintWriter fich = null; //Para poder escribir en el fichero primero creamos una variable fich de tipo PrintWriter.
-                            for (Usuario user: lista) { //Bucle for each que recorre el ArrayList de Usuarios.
-                                if(nombre.equals(user.nombre)){ //If que en caso de encontrar el nombre de usuario nos guarde la partida.
-                                        fich = new PrintWriter(new FileWriter("Usuarios.txt")); //creacion del fichero empleando el nombre de usuario para el String nom.
-                                        JOptionPane.showMessageDialog(null,user); //JOptionPane que nos muestra nuestras estadisticas tras la partida.
-                                        fich.println(user); //Escritura en el fichero de los datos del usuario.
-                                        fich.close(); //Cierre del fichero.
                                 }
-                            }
-                        
-        
-    }
+                            
+
     
     
     
@@ -206,17 +216,35 @@ public class Metodos {
     break;
         }}}}}
     
-    public void verUsers(ArrayList<Usuario>lista){
-    if(lista.isEmpty()==true)
-        JOptionPane.showMessageDialog(null,"No existen usuarios");
-    else{
-    for(Usuario al:lista){
-    JOptionPane.showMessageDialog(null,al);
-    }
-    }
-    }
-    
-    
-    
-    
+    public void verUsers(ArrayList<Usuario>lita){
+    try {
+        ObjectInputStream ler;
+    FileInputStream f; 
+    String nome= PedirDatos.texto("Nombre del usuario que desea ver");
+        f= new FileInputStream(nome+".dat");
+            ler= new ObjectInputStream(f);
+           Usuario al= (Usuario) ler.readObject();
+           ArrayList lista = new ArrayList();
+           if(al!=null){
+               while(al!=null){
+                   try{
+               System.out.println(al);
+               al=(Usuario) ler.readObject();
+               lista.add(al);
+               }catch (Exception ex) {
+                   break;
+               }
+           }
+           }
+           
+           
+        } catch (FileNotFoundException ex) {
+            System.out.println("erro 4"+ex.getMessage());
+        }catch(IOException ex) {
+                System.out.println("erro 5"+ex.getMessage());
+     
+    }   catch (ClassNotFoundException ex) {
+            System.out.println("erro 6"+ex.getMessage());
+        }
+}
 }

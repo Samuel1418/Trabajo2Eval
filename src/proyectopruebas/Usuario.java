@@ -1,11 +1,13 @@
 package proyectopruebas;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author cromerofajar
  */
-public class Usuario{
+public class Usuario implements Serializable{
     String nombre, rango,contraseña;
     int elo;
 
